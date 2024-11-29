@@ -11,14 +11,6 @@ resource "aws_vpc" "vpc" {
   Public Subnet
 */
 
-resource "aws_internet_gateway" "ig" {
-  vpc_id = aws_vpc.vpc.id
-
-  tags = {
-    Name = "${var.name_prefix}-ig"
-  }
-}
-
 resource "aws_subnet" "public" {
   for_each = var.public_subnet
 
@@ -31,7 +23,20 @@ resource "aws_subnet" "public" {
   }
 }
 
+
+resource "aws_internet_gateway" "ig" {
+  count = length(aws_subnet.public)
+
+  vpc_id = aws_vpc.vpc.id
+
+  tags = {
+    Name = "${var.name_prefix}-ig"
+  }
+}
+
 resource "aws_route_table" "public" {
+  count = length(aws_subnet.public)
+
   vpc_id = aws_vpc.vpc.id
 
   tags = {
@@ -40,6 +45,8 @@ resource "aws_route_table" "public" {
 }
 
 resource "aws_route_table_association" "public_route_table_association" {
+  count = length(aws_subnet.public)
+
   for_each = aws_subnet.public
 
   subnet_id      = each.value.id
@@ -47,6 +54,8 @@ resource "aws_route_table_association" "public_route_table_association" {
 }
 
 resource "aws_route" "public_internet_gateway" {
+  count = length(aws_subnet.public)
+
   route_table_id         = aws_route_table.public.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.ig.id
