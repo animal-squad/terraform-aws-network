@@ -1,11 +1,11 @@
 output "vpc_id" {
-  description = "vpc의 arn"
-  value       = aws_vpc.vpc.arn
-}
-
-output "vpc_id" {
   description = "vpc의 id"
   value       = aws_vpc.vpc.id
+}
+
+output "vpc_arn" {
+  description = "vpc의 arn"
+  value       = aws_vpc.vpc.arn
 }
 
 output "internet_gateway_id" {
