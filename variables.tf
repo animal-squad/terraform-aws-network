@@ -30,7 +30,7 @@ variable "public_subnet" {
   description = "생성할 public subnet. key는 subnet 이름에 postfix로 사용됩니다."
   type = map(object({
     az          = string
-    cidir_block = string
+    cidr_block = string
   }))
   default = {}
 }
@@ -39,7 +39,7 @@ variable "private_subnet" {
   description = "생성할 private subnet. key는 subnet 이름에 postfix로 사용됩니다."
   type = map(object({
     az          = string
-    cidir_block = string
+    cidr_block = string
   }))
   default = {}
 }
