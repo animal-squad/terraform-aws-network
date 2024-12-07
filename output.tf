@@ -10,12 +10,12 @@ output "vpc_arn" {
 
 output "internet_gateway_id" {
   description = "ig의 id"
-  value       = aws_internet_gateway.ig.id
+  value       = aws_internet_gateway.ig[0].id
 }
 
 output "internet_gateway_arn" {
   description = "ig의 arn"
-  value       = aws_internet_gateway.ig.arn
+  value       = aws_internet_gateway.ig[0].arn
 }
 
 output "public_subnets" {
